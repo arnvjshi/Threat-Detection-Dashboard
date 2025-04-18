@@ -2,7 +2,18 @@
 
 import { useState } from "react"
 import Link from "next/link"
-import { AlertCircle, CheckCircle, Home } from "lucide-react"
+import {  ArrowRight, 
+  Shield, 
+  FileAudio, 
+  FileText, 
+  Video, 
+  Bell, 
+  Menu, 
+  X, 
+  Users, 
+  Lock, 
+  HelpCircle,
+  Search,AlertCircle, CheckCircle, Home } from "lucide-react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button } from "@/components/ui/button"
@@ -13,6 +24,9 @@ import { TextAnalyzer } from "@/components/text-analyzer"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 export default function Dashboard() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
   const [threatDetected, setThreatDetected] = useState(false)
   const [threatLevel, setThreatLevel] = useState(0)
   const [threatData, setThreatData] = useState<{ time: string; level: number }[]>([])
@@ -35,6 +49,16 @@ export default function Dashboard() {
       return newData
     })
   }
+  const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
+    return (
+      <Link 
+        href={href} 
+        className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-300 hover:underline decoration-primary decoration-2 underline-offset-4"
+      >
+        {children}
+      </Link>
+    );
+  };
 
   const resetVals=()=>{
     setThreatDetected(false)
@@ -43,19 +67,138 @@ export default function Dashboard() {
   }
 
   return (
+    <div className="flex min-h-screen flex-col">
     <main className="flex min-h-screen flex-col">
-      <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+       <header className={`fixed w-full z-50 transition-all duration-300 ${
+        isScrolled 
+          ? "bg-background/80 backdrop-blur-lg shadow-md" 
+          : "bg-background/30 backdrop-blur-md"
+      }`}>
         <div className="container flex h-16 items-center justify-between">
-          <h1 className="text-xl font-bold">Multimodal Threat Detection System</h1>
-          <div className="flex items-center gap-4">
+          <div className="flex items-center space-x-4">
+            <Link href="/" className="flex items-center space-x-2">
+              <Shield className="h-8 w-8 text-primary" />
+              <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-600 transition-all duration-300 hover:scale-105">
+                Threat<span className="font-light">Detect</span>
+              </span>
+            </Link>
+            
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex ml-8 space-x-6">
+              <NavLink href="#"></NavLink>
+            </nav>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            {/* Search button */}
+            <Button variant="ghost" size="icon" className="hidden sm:flex hover:bg-primary/10 transition-colors">
+              <Search className="h-5 w-5" />
+            </Button>
+            
+            {/* Notifications button */}
+            <Button variant="ghost" size="icon" className="hidden sm:flex hover:bg-primary/10 transition-colors">
+              <Bell className="h-5 w-5" />
+            </Button>
+            
             <ThemeToggle />
-            <Button variant="outline" size="icon" asChild>
+            
+            {/* Login button */}
+            <Button 
+              variant="outline" 
+              size="sm" 
+              className="hidden sm:flex border-primary/20 hover:border-primary hover:bg-primary/10 transition-all duration-300"
+            >
+              Log In
+            </Button>
+            
+            {/* CTA button */}
+            <Button 
+              asChild 
+              size="sm"
+              className="hidden sm:flex bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-primary/20 transition-all duration-300"
+            >
               <Link href="/">
-                <Home className="h-4 w-4" />
-                <span className="sr-only">Home</span>
+                Home
+                <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
+            
+            {/* Mobile menu button */}
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="md:hidden" 
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            </Button>
           </div>
+        </div>
+        
+        {/* Mobile menu */}
+        <div 
+          className={`md:hidden absolute w-full bg-background/95 backdrop-blur-lg border-b border-primary/10 shadow-lg transition-all duration-300 overflow-hidden ${
+            isMenuOpen ? "max-h-screen" : "max-h-0"
+          }`}
+        >
+          <nav className="container py-4 flex flex-col space-y-4">
+            <Link 
+              href="/products" 
+              className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-primary/10 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <Shield className="h-5 w-5 text-primary" />
+              <span>Products</span>
+            </Link>
+            <Link 
+              href="/solutions" 
+              className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-primary/10 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <Lock className="h-5 w-5 text-primary" />
+              <span>Solutions</span>
+            </Link>
+            <Link 
+              href="/pricing" 
+              className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-primary/10 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <FileText className="h-5 w-5 text-primary" />
+              <span>Pricing</span>
+            </Link>
+            <Link 
+              href="/resources" 
+              className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-primary/10 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <HelpCircle className="h-5 w-5 text-primary" />
+              <span>Resources</span>
+            </Link>
+            <Link 
+              href="/contact" 
+              className="flex items-center space-x-2 px-4 py-2 rounded-lg hover:bg-primary/10 transition-colors"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              <Users className="h-5 w-5 text-primary" />
+              <span>Contact</span>
+            </Link>
+            <div className="flex space-x-2 mt-2 pt-2 border-t border-primary/10">
+              <Button 
+                className="flex-1 border-primary/20 hover:border-primary hover:bg-primary/10 transition-all duration-300"
+                variant="outline"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Log In
+              </Button>
+              <Button 
+                className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white transition-all duration-300"
+                onClick={() => setIsMenuOpen(false)}
+                asChild
+              >
+                <Link href="/">Home</Link>
+              </Button>
+            </div>
+          </nav>
         </div>
       </header>
 
@@ -122,5 +265,6 @@ export default function Dashboard() {
         </Card>
       </div>
     </main>
+  </div>
   )
 }

@@ -1,7 +1,9 @@
+// File: pages/index.tsx
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
+import * as THREE from "three"
 import { 
   ArrowRight, 
   Shield, 
@@ -9,7 +11,6 @@ import {
   FileText, 
   Video, 
   Bell, 
-  Settings, 
   Menu, 
   X, 
   Users, 
@@ -21,9 +22,152 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { ThemeToggle } from "@/components/theme-toggle"
 
+// ThreeJS Background Component
+const ThreeBackground = () => {
+  const mountRef = useRef<HTMLDivElement>(null)
+  
+  useEffect(() => {
+    if (!mountRef.current) return
+    
+    // Setup
+    const scene = new THREE.Scene()
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
+    
+    renderer.setSize(window.innerWidth, window.innerHeight)
+    renderer.setClearColor(0x000000, 0)
+    mountRef.current.appendChild(renderer.domElement)
+    
+    // Create particles
+    const particlesGeometry = new THREE.BufferGeometry()
+    const particlesCount = 1000
+    
+    const positionArray = new Float32Array(particlesCount * 3)
+    const colorArray = new Float32Array(particlesCount * 3)
+    
+    for (let i = 0; i < particlesCount * 3; i++) {
+      // Position
+      positionArray[i] = (Math.random() - 0.5) * 10
+      
+      // Color - shades of blue and purple
+      if (i % 3 === 0) {
+        colorArray[i] = Math.random() * 0.3 + 0.2 // R (blue-ish)
+      } else if (i % 3 === 1) {
+        colorArray[i] = Math.random() * 0.2 // G (low)
+      } else {
+        colorArray[i] = Math.random() * 0.5 + 0.5 // B (high)
+      }
+    }
+    
+    particlesGeometry.setAttribute('position', new THREE.BufferAttribute(positionArray, 3))
+    particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3))
+    
+    const particlesMaterial = new THREE.PointsMaterial({ 
+      size: 0.02, 
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.6,
+    })
+    
+    const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial)
+    scene.add(particlesMesh)
+    
+    camera.position.z = 4
+    
+    // Mouse movement effect
+    let mouseX = 0
+    let mouseY = 0
+    
+    const handleMouseMove = (event: MouseEvent) => {
+      mouseX = (event.clientX / window.innerWidth) * 2 - 1
+      mouseY = -(event.clientY / window.innerHeight) * 2 + 1
+    }
+    
+    window.addEventListener('mousemove', handleMouseMove)
+    
+    // Handle window resize
+    const handleResize = () => {
+      camera.aspect = window.innerWidth / window.innerHeight
+      camera.updateProjectionMatrix()
+      renderer.setSize(window.innerWidth, window.innerHeight)
+    }
+    
+    window.addEventListener('resize', handleResize)
+    
+    // Animation loop
+    const animate = () => {
+      requestAnimationFrame(animate)
+      
+      // Rotate particles slowly
+      particlesMesh.rotation.x += 0.0003
+      particlesMesh.rotation.y += 0.0002
+      
+      // Move based on mouse position
+      particlesMesh.rotation.x += mouseY * 0.0001
+      particlesMesh.rotation.y += mouseX * 0.0001
+      
+      renderer.render(scene, camera)
+    }
+    
+    animate()
+    
+    // Cleanup
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('resize', handleResize)
+      mountRef.current?.removeChild(renderer.domElement)
+    }
+  }, [])
+  
+  return <div ref={mountRef} className="fixed inset-0 z-0" />
+}
+
+// NavLink component with subtle hover effect
+const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
+  return (
+    <Link 
+      href={href} 
+      className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-300 hover:underline decoration-primary decoration-2 underline-offset-4"
+    >
+      {children}
+    </Link>
+  );
+};
+
+// Scroll Progress Bar
+const ScrollProgress = () => {
+  const [scrollPercentage, setScrollPercentage] = useState(0)
+  
+  useEffect(() => {
+    const handleScroll = () => {
+      const windowHeight = window.innerHeight
+      const documentHeight = document.documentElement.scrollHeight - windowHeight
+      const scrollTop = window.scrollY
+      
+      const percentage = (scrollTop / documentHeight) * 100
+      setScrollPercentage(percentage)
+    }
+    
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+  
+  return (
+    <div className="fixed top-0 left-0 w-full h-1 z-50">
+      <div 
+        className="h-full bg-gradient-to-r from-blue-500 to-purple-600"
+        style={{ width: `${scrollPercentage}%` }}
+      />
+    </div>
+  )
+}
+
 export default function Home(): JSX.Element {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   // Handle scroll effect for navbar
   useEffect(() => {
@@ -33,16 +177,32 @@ export default function Home(): JSX.Element {
       } else {
         setIsScrolled(false);
       }
+      
+      // For reveal animations
+      setIsVisible(true);
     };
 
     window.addEventListener("scroll", handleScroll);
+    
+    // Initial visibility after a small delay
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 300);
+    
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timer);
     };
   }, []);
 
   return (
     <div className="flex min-h-screen flex-col">
+      {/* Three.js Background */}
+      <ThreeBackground />
+      
+      {/* Scroll Progress Bar */}
+      <ScrollProgress />
+      
       <header className={`fixed w-full z-50 transition-all duration-300 ${
         isScrolled 
           ? "bg-background/80 backdrop-blur-lg shadow-md" 
@@ -59,11 +219,7 @@ export default function Home(): JSX.Element {
             
             {/* Desktop Navigation */}
             <nav className="hidden md:flex ml-8 space-x-6">
-              <NavLink href="/products">Products</NavLink>
-              <NavLink href="/solutions">Solutions</NavLink>
-              <NavLink href="/pricing">Pricing</NavLink>
-              <NavLink href="/resources">Resources</NavLink>
-              <NavLink href="/contact">Contact</NavLink>
+              <NavLink href="/dashboard">Dashboard</NavLink>
             </nav>
           </div>
           
@@ -188,7 +344,7 @@ export default function Home(): JSX.Element {
         <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-background/80">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-              <div className="flex flex-col justify-center space-y-4">
+              <div className={`flex flex-col justify-center space-y-4 transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"}`}>
                 <div className="inline-flex items-center space-x-2 rounded-full bg-primary/10 px-3 py-1 text-sm text-primary max-w-max">
                   <span className="animate-pulse">●</span>
                   <span>Active Protection</span>
@@ -226,10 +382,10 @@ export default function Home(): JSX.Element {
                   </Button>
                 </div>
               </div>
-              <div className="mx-auto lg:mr-0 flex items-center justify-center">
+              <div className={`mx-auto lg:mr-0 flex items-center justify-center transition-all duration-700 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"}`}>
                 <div className="relative w-full max-w-[500px] aspect-square">
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full blur-3xl opacity-20 animate-pulse" />
-                  <div className="relative bg-background/5 backdrop-blur-lg border border-white/20 rounded-xl shadow-[10px_10px_20px_rgba(0,0,0,0.1),-10px_-10px_20px_rgba(255,255,255,0.05)] p-6 flex items-center justify-center">
+                  <div className="relative bg-background/10 backdrop-blur-lg border border-white/20 rounded-xl shadow-[10px_10px_20px_rgba(0,0,0,0.1),-10px_-10px_20px_rgba(255,255,255,0.05)] p-6 flex items-center justify-center transition-transform duration-500 hover:rotate-2 hover:scale-102">
                     <Shield className="h-32 w-32 text-primary animate-pulse" />
                   </div>
                 </div>
@@ -250,7 +406,7 @@ export default function Home(): JSX.Element {
               </div>
             </div>
             <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 md:grid-cols-3 lg:gap-12 mt-12">
-              <Card className="border border-primary/10 shadow-lg hover:shadow-primary/20 transition-all duration-300 flex flex-col items-center text-center">
+              <Card className={`border border-primary/10 shadow-lg hover:shadow-primary/20 transition-all duration-500 flex flex-col items-center text-center ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{transitionDelay: "100ms"}}>
                 <CardHeader>
                   <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
                     <Video className="h-10 w-10 text-primary" />
@@ -263,7 +419,7 @@ export default function Home(): JSX.Element {
                   </CardDescription>
                 </CardContent>
               </Card>
-              <Card className="border border-primary/10 shadow-lg hover:shadow-primary/20 transition-all duration-300 flex flex-col items-center text-center">
+              <Card className={`border border-primary/10 shadow-lg hover:shadow-primary/20 transition-all duration-500 flex flex-col items-center text-center ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{transitionDelay: "200ms"}}>
                 <CardHeader>
                   <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
                     <FileAudio className="h-10 w-10 text-primary" />
@@ -276,7 +432,7 @@ export default function Home(): JSX.Element {
                   </CardDescription>
                 </CardContent>
               </Card>
-              <Card className="border border-primary/10 shadow-lg hover:shadow-primary/20 transition-all duration-300 flex flex-col items-center text-center">
+              <Card className={`border border-primary/10 shadow-lg hover:shadow-primary/20 transition-all duration-500 flex flex-col items-center text-center ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`} style={{transitionDelay: "300ms"}}>
                 <CardHeader>
                   <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
                     <FileText className="h-10 w-10 text-primary" />
@@ -294,7 +450,7 @@ export default function Home(): JSX.Element {
         </section>
 
         {/* CTA Section */}
-        <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
+        <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-blue-900/20 to-purple-900/20 backdrop-blur-sm">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -318,7 +474,7 @@ export default function Home(): JSX.Element {
         </section>
       </main>
 
-      <footer className="border-t py-6 md:py-0">
+      <footer className="border-t py-6 md:py-0 backdrop-blur-sm bg-background/30">
         <div className="container flex flex-col items-center justify-between gap-4 md:h-16 md:flex-row">
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} ThreatDetect. All rights reserved.
@@ -328,15 +484,3 @@ export default function Home(): JSX.Element {
     </div>
   )
 }
-
-// NavLink component for consistent styling
-const NavLink = ({ href, children }: { href: string; children: React.ReactNode }) => {
-  return (
-    <Link 
-      href={href} 
-      className="text-sm font-medium text-foreground/70 hover:text-foreground transition-colors duration-200 hover:underline decoration-primary decoration-2 underline-offset-4"
-    >
-      {children}
-    </Link>
-  );
-};
