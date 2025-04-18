@@ -60,6 +60,7 @@
     "speech-to-text": "^2.9.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "three": "^0.175.0",
     "vaul": "^0.9.6",
     "zod": "^3.24.1"
   },

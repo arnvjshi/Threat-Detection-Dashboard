@@ -3,7 +3,7 @@ import { generateText } from "ai"
 
 // Create Groq instance with API key directly (not recommended for production)
 const groq = createGroq({
-  apiKey: "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",
+  apiKey: process.env.GROQ_API_KEY || "your-groq-api-key",
 })
 
 // Function to analyze text using Groq API
