@@ -68,7 +68,6 @@ export default function Developers() {
     {
       name: "Arnav Joshi",
       role: "Lead Developer",
-      email: "arnavjoshi@example.com",
       github: "https://github.com/arnvjshi",
       email: "arnavjoshi0512@gmail.com",
       website: "arnavjoshi.vercel.app",
