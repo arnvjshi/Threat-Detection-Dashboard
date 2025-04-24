@@ -57,6 +57,34 @@ export function Features() {
 
         <div className="rounded-xl bg-white/5 p-6 backdrop-blur-lg">
           <div className="mb-4 rounded-full bg-purple-500/20 p-3 w-fit">
+            <Zap className="h-6 w-6 text-purple-500" />
+          </div>
+          <h3 className="mb-2 text-xl font-bold text-white">Seamless Integration</h3>
+          <p className="text-slate-300">
+            Easily integrate with existing systems for a smooth and efficient workflow.
+          </p>
+        </div>
+
+        <div className="rounded-xl bg-white/5 p-6 backdrop-blur-lg">
+          <div className="mb-4 rounded-full bg-purple-500/20 p-3 w-fit">
+            <Cpu className="h-6 w-6 text-purple-500" />
+          </div>
+          <h3 className="mb-2 text-xl font-bold text-white">AI-Powered Insights</h3>
+          <p className="text-slate-300">
+            Utilize AI-driven insights to proactively mitigate potential threats before they escalate.
+          </p>
+        </div>
+
+        <div className="rounded-xl bg-white/5 p-6 backdrop-blur-lg">
+          <div className="mb-4 rounded-full bg-purple-500/20 p-3 w-fit">
+            <Cpu className="h-6 w-6 text-purple-500" />
+          </div>
+          <h3 className="mb-2 text-xl font-bold text-white">Powered by Groq</h3>
+            <p className="text-slate-300">Harnessing the power of Groq for unparalleled threat analysis and performance.</p>
+        </div>
+
+        <div className="rounded-xl bg-white/5 p-6 backdrop-blur-lg">
+          <div className="mb-4 rounded-full bg-purple-500/20 p-3 w-fit">
             <Cpu className="h-6 w-6 text-purple-500" />
           </div>
           <h3 className="mb-2 text-xl font-bold text-white">Powered by Gemini 2.0 Flash</h3>
@@ -64,6 +92,9 @@ export function Features() {
             Leveraging Google's Gemini 2.0 Flash for fast, accurate image threat detection and analysis.
           </p>
         </div>
+        
+
+        
       </div>
     </section>
   )

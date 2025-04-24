@@ -31,9 +31,6 @@ export function Navbar() {
           <Link href="/dashboard" className="text-sm font-medium text-white hover:text-purple-300">
             Dashboard
           </Link>
-          <Link href="/developers" className="text-sm font-medium text-white hover:text-purple-300">
-            Developers
-          </Link>
         </nav>
 
         <div className="hidden items-center gap-4 md:flex">

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Shield, Twitter, Github, Linkedin } from "lucide-react"
+import { Shield, Github, Linkedin } from "lucide-react"
 
 export function Footer() {
   return (
@@ -15,13 +15,10 @@ export function Footer() {
               Advanced threat detection powered by AI for audio, text, and image analysis.
             </p>
             <div className="mt-6 flex gap-4">
-              <Link href="https://github.com" target="_blank" className="text-slate-400 hover:text-purple-500">
+              <Link href="https://github.com/arnvjshi/Threat-Detection-Dashboard" target="_blank" className="text-slate-400 hover:text-purple-500">
                 <Github className="h-5 w-5" />
               </Link>
-              <Link href="https://twitter.com" target="_blank" className="text-slate-400 hover:text-purple-500">
-                <Twitter className="h-5 w-5" />
-              </Link>
-              <Link href="https://linkedin.com" target="_blank" className="text-slate-400 hover:text-purple-500">
+              <Link href="https://www.linkedin.com/in/arnav-joshi-aj05/" target="_blank" className="text-slate-400 hover:text-purple-500">
                 <Linkedin className="h-5 w-5" />
               </Link>
             </div>
@@ -51,9 +48,7 @@ export function Footer() {
           <div>
             <h3 className="mb-4 text-lg font-bold text-white">Contact</h3>
             <ul className="space-y-2">
-              <li className="text-slate-300">Email: info@threatshield.com</li>
-              <li className="text-slate-300">Phone: +1 (555) 123-4567</li>
-              <li className="text-slate-300">Address: 123 Security St, Tech City</li>
+              <li className="text-slate-300">Email: arnavjoshi0512@gmail.com</li>
             </ul>
           </div>
         </div>
