@@ -86,8 +86,3 @@ Built with an unhealthy amount of caffeine and ambition by the ThreatShield Team
 Developers: [Arnav Joshi](https://github.com/arnvjshi) , [Nehanshu Gaidhani](https://github.com/arnvjshi), [Paras Baidwaik](https://github.com/arnvjshi), [Ayush Dhamecha](https://github.com/arnvjshi)
 
 Website: [ThreatShield Dashboard](https://threat-detection-dashboard.vercel.app)
-
----
-
-Would you also like a slightly more *"corporate witty"* version too (a bit less casual than this but still fun)?  
-I can quickly prepare that if you want!
