@@ -70,7 +70,7 @@ export default function Developers() {
       role: "Lead Developer",
       github: "https://github.com/arnvjshi",
       email: "arnavjoshi0512@gmail.com",
-      website: "arnavjoshi.vercel.app",
+      website: "https://arnavjoshi.vercel.app",
       description: "Lead developer responsible for the architecture and implementation of the threat detection system with APIs and Structure.",
     },
     {
