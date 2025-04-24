@@ -61,11 +61,11 @@ Open [http://localhost:3000](http://localhost:3000) and you’re good to go.
 
 ## Roadmap
 
-- Text threat analysis (done)
-- Audio-to-text and threat detection (done)
-- Image threat analysis (in progress)
-- Admin analytics dashboard (coming soon)
-- Support for multiple languages (eventually, yes)
+- Text threat analysis
+- Audio-to-text and threat detection
+- Image threat analysis
+- Admin analytics dashboard
+- Support for multiple languages
 
 ## Contributing
 
