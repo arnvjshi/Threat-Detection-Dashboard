@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     const base64Image = Buffer.from(buffer).toString("base64")
 
     // Prepare the request to Gemini API
-    const apiKey = "AIzaSyBc2MlF5b_Kddzj4mkmcgQcgdOBJMJnuwQ"
+    const apiKey = process.env.GEMINI_API_KEY
     const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${apiKey}`
 
     const requestData = {
