@@ -326,7 +326,7 @@ export function TextAnalysis() {
                     <Line
                       type="monotone"
                       dataKey="probability"
-                      stroke="var(--color-probability)"
+                      stroke="#fcfcfc"
                       name="Threat Probability"
                       strokeWidth={2}
                       dot={{ r: 4 }}
