@@ -1,6 +1,7 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { usePathname } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Shield, Menu, X, Bell, User } from "lucide-react"
@@ -15,21 +16,46 @@ import {
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
+  const pathname = usePathname()
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 10) {
+        setScrolled(true)
+      } else {
+        setScrolled(false)
+      }
+    }
+
+    window.addEventListener("scroll", handleScroll)
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  const linkClass = (href: string) =>
+    `text-sm font-medium hover:text-purple-300 ${
+      pathname === href ? "text-purple-400" : "text-white"
+    }`
 
   return (
-    <header className="sticky top-0 z-50 w-full backdrop-blur-md">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+    <header
+      className={`fixed top-4 left-1/2 z-50 w-[95%] -translate-x-1/2 rounded-3xl border border-white/10 backdrop-blur-md transition-all duration-300 ${
+        scrolled
+          ? "bg-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] h-14 animate-float"
+          : "bg-white/10 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] h-20 animate-float"
+      }`}
+    >
+      <div className="container mx-auto flex items-center justify-between px-6 h-full">
         <Link href="/" className="flex items-center gap-2">
-          {/* <Shield className="h-8 w-8 text-purple-500" />*/}
           <img src="/favicon.png" alt="ThreatShield Logo" className="h-8 w-8" />
           <span className="text-xl font-bold text-white">ThreatShield</span>
-        </Link> 
+        </Link>
 
         <nav className="hidden md:flex md:items-center md:gap-6">
-          <Link href="/" className="text-sm font-medium text-white hover:text-purple-300">
+          <Link href="/" className={linkClass("/")}>
             Home
           </Link>
-          <Link href="/dashboard" className="text-sm font-medium text-white hover:text-purple-300">
+          <Link href="/dashboard" className={linkClass("/dashboard")}>
             Dashboard
           </Link>
         </nav>
@@ -85,21 +111,21 @@ export function Navbar() {
           <nav className="flex flex-col space-y-4">
             <Link
               href="/"
-              className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-white/10"
+              className={linkClass("/")}
               onClick={() => setIsMenuOpen(false)}
             >
               Home
             </Link>
             <Link
               href="/dashboard"
-              className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-white/10"
+              className={linkClass("/dashboard")}
               onClick={() => setIsMenuOpen(false)}
             >
               Dashboard
             </Link>
             <Link
               href="/developers"
-              className="rounded-md px-3 py-2 text-sm font-medium text-white hover:bg-white/10"
+              className={linkClass("/developers")}
               onClick={() => setIsMenuOpen(false)}
             >
               Developers

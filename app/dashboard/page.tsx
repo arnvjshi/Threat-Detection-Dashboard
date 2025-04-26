@@ -19,8 +19,10 @@ export default function Dashboard() {
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-slate-900 to-slate-800">
       <ThreeBackground intensity={0.3} />
       <div className="relative z-10">
+      
         <Navbar />
         <main className="container mx-auto px-4 py-8">
+        <div className="pt-20">
           <DashboardHeader selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
 
           {/* Render content based on selected tab */}
@@ -41,6 +43,7 @@ export default function Dashboard() {
             {selectedTab === "text" && <TextAnalysis />}
             {selectedTab === "image" && <ImageAnalysis />}
           </div>
+        </div>
         </main>
       </div>
     </div>
