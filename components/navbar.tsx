@@ -45,7 +45,6 @@ export function Navbar() {
               <DropdownMenuLabel>Notifications</DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuItem>New threat detected</DropdownMenuItem>
-              <DropdownMenuItem>System update available</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
 

@@ -71,28 +71,32 @@ export function AudioAnalysis() {
     }
 
     // @ts-ignore - SpeechRecognition is not in the TypeScript types
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition
-    const recognition = new SpeechRecognition()
+   const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
 
-    recognition.continuous = true
-    recognition.interimResults = true
-    recognition.lang = "en-US"
+recognition.continuous = true;
+recognition.interimResults = true;
+recognition.lang = "en-US";
 
-    recognition.onresult = (event: any) => {
-      let interimTranscript = ""
-      let finalTranscript = ""
+let finalTranscript = ""; 
 
-      for (let i = event.resultIndex; i < event.results.length; ++i) {
-        if (event.results[i].isFinal) {
-          finalTranscript += event.results[i][0].transcript
-        } else {
-          interimTranscript += event.results[i][0].transcript
-        }
-      }
+recognition.onresult = (event: any) => {
+  let interimTranscript = "";
 
-      // Update the transcription with the final or interim result
-      setTranscription((prev) => prev + " " + (finalTranscript || interimTranscript))
+  for (let i = event.resultIndex; i < event.results.length; ++i) {
+    const transcript = event.results[i][0].transcript;
+
+    if (event.results[i].isFinal) {
+      finalTranscript += transcript + " ";
+    } else {
+      interimTranscript += transcript;
     }
+  }
+
+ 
+  setTranscription(finalTranscript + interimTranscript);
+};
+
 
     recognition.onerror = (event: any) => {
       console.error("Speech recognition error", event.error)
