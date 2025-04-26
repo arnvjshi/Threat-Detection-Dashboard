@@ -20,9 +20,10 @@ export function Navbar() {
     <header className="sticky top-0 z-50 w-full backdrop-blur-md">
       <div className="container mx-auto flex h-16 items-center justify-between px-4">
         <Link href="/" className="flex items-center gap-2">
-          <Shield className="h-8 w-8 text-purple-500" />
+          {/* <Shield className="h-8 w-8 text-purple-500" />*/}
+          <img src="/favicon.png" alt="ThreatShield Logo" className="h-8 w-8" />
           <span className="text-xl font-bold text-white">ThreatShield</span>
-        </Link>
+        </Link> 
 
         <nav className="hidden md:flex md:items-center md:gap-6">
           <Link href="/" className="text-sm font-medium text-white hover:text-purple-300">
