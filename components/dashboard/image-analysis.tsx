@@ -369,7 +369,7 @@ export function ImageAnalysis() {
                 config={{
                   probability: {
                     label: "Threat Probability",
-                    color: "hsl(var(--chart-1))",
+                    color: "white",
                   },
                 }}
                 className="h-full"
@@ -386,7 +386,7 @@ export function ImageAnalysis() {
                     />
                     <YAxis stroke="rgba(255,255,255,0.5)" domain={[0, 100]} />
                     <ChartTooltip content={<ChartTooltipContent />} />
-                    <Legend />
+                    <Legend wrapperStyle={{ color: 'white' }}/>
                     <Line
                       type="monotone"
                       dataKey="probability"

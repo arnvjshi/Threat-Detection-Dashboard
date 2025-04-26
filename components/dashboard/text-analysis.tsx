@@ -322,7 +322,7 @@ export function TextAnalysis() {
                     />
                     <YAxis stroke="rgba(255,255,255,0.5)" domain={[0, 100]} />
                     <ChartTooltip content={<ChartTooltipContent />} />
-                    <Legend />
+                    <Legend wrapperStyle={{ color: 'white' }}/>
                     <Line
                       type="monotone"
                       dataKey="probability"
