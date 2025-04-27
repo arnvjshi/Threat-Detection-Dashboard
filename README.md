@@ -39,10 +39,39 @@ Applications include:
 - Paras Badwaik
 
 **Our Approach:**
-- Tackled the problem of multimodal threat detection using real-time inference with Groq.
-- Overcame challenges of combining text, audio, and images into a unified, fast system.
-- Designed a dashboard for quick, actionable insights without backend dependency.
-- Prioritized user privacy by ensuring all data processing and storage happens locally.
+
+
+We chose the Multimodal Threat Detection problem because in today’s world, threats are no longer limited to written text — they emerge through speech, visuals, and even casual communication.
+However, most existing solutions are either siloed (handling only one input type), slow to respond, or heavily reliant on cloud processing, risking user privacy.
+
+Our goal was to build a system that is:
+
+✅ Multimodal — analyzing text, audio, and images together,
+
+✅ Real-time — detecting threats instantly with Groq’s high-speed inference,
+
+✅ Privacy-first — processing all data locally without server dependency,
+
+✅ Actionable — giving clear summaries, sentiment scores, and live safety graphs.
+
+We believe ThreatShield represents the next generation of proactive threat monitoring — fast, secure, visual, and adaptable for education, law enforcement, enterprises, and online communities.
+
+
+**Key challenges:**
+
+  -Processing different data types (text/audio/image) together.
+
+  -Achieving fast inference without cloud servers.
+
+  -Building a visually intuitive, responsive dashboard.
+
+**Breakthroughs:**
+
+  -Unified analysis pipeline for text and audio.
+
+  -Timestamped threat plotting with severity graph.
+
+  -Secure local storage using localStorage, avoiding backend databases.
 
 ---
 
@@ -139,8 +168,6 @@ Visit http://localhost:3000 to see the project running!
 ## 📎 Resources / Credits
 
 Groq — High-speed text, audio, and image analysis.
-
-Speech-to-Text API — Audio transcription to text.
 
 Recharts, Chart.js — For beautiful data visualizations.
 
