@@ -18,7 +18,7 @@ Only the latest minor releases (v1.2.x and v1.3.x) are actively supported with s
 If you discover a vulnerability in this project, please follow these steps:
 
 1. **Do not** disclose it publicly in an issue or pull request.
-2. Instead, report it **privately** by sending an email to **arnvjshi [at] gmail [dot] com**.
+2. Instead, report it **privately** by sending an email to **arnvjshi@gmail.com**.
 3. Include as much detail as possible: reproduction steps, impact assessment, and suggested remediation (if available).
 4. You will receive an acknowledgment within **48 hours**, and updates will be provided within **5 business days** of triage.
 
