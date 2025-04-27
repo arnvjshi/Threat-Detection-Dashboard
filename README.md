@@ -1,88 +1,108 @@
-# ThreatShield 
+# ThreatShield
 
-**Live Demo**: [https://threat-detection-dashboard.vercel.app](https://threat-detection-dashboard.vercel.app)
+**Live Demo**: [threat-detection-dashboard.vercel.app](https://threat-detection-dashboard.vercel.app)
 
-**ThreatShield** is not just another threat detection tool. It's an AI-powered security assistant that analyzes **text**, **audio**, and (soon) **images** to detect potential risks — faster than you can say "data breach."
+> "Analyze. Detect. Protect. — in real time."
 
-Powered by models from **Groq** and **Google's Gemini**, ThreatShield helps organizations spot threats before they turn into headlines, combining cutting-edge technology with a focus on speed, accuracy, and a user experience that doesn’t require a PhD to understand.
+**ThreatShield** is your AI-powered partner for real-time threat detection across **text**, **audio**, and **images** — all with **zero compromises** on privacy.  
+Analyze sensitive content in seconds, visualize threats clearly, and stay a step ahead — without your data ever leaving your device.
 
-## About the Project
+---
 
-ThreatShield was built with a simple goal:  
-**Make threat detection smarter, faster, and less of a nightmare.**
+## 🚀 What You Can Do with ThreatShield
 
-The platform leverages real-time AI analysis across multiple input types, providing instant feedback without sending your data across the internet. Your secrets stay secret. Your threats don't.
+### 🔍 Scan Text
+- Paste any text — from emails to reports — and instantly uncover threats like violence, hate speech, or harassment.
+- Get an easy-to-read summary and a breakdown of threat types.
 
-All analysis happens directly in the browser. No external databases. No shady "we care about your privacy" statements. Just actual privacy.
+### 🎙️ Analyze Audio
+- Upload recordings — calls, voice notes, podcasts.
+- ThreatShield transcribes and analyzes them automatically, showing you hidden risks inside spoken content.
 
-## Features
+### 🖼️ Inspect Images
+- Upload images — screenshots, media files, or graphics.
+- Our AI scans for dangerous visual elements and warns you about potential threats.
 
-- Text analysis for toxicity, threats, hate speech, and more.
-- Audio support: Upload your voice, and let the AI do the eavesdropping you authorized.
-- Image analysis (coming soon, because training an AI to recognize danger in memes takes time).
-- Real-time threat scoring with recommendations.
-- Sleek, minimal, and actually-usable UI.
-- Built with client-side privacy in mind: Your data never leaves your machine.
+---
 
-## Technology Stack
+## 📊 Visual Diagnostics — Instantly
 
-| Area          | Tech Used                            |
-|---------------|---------------------------------------|
-| Frontend      | Next.js, React, Tailwind CSS           |
-| Backend       | Serverless Functions (Next.js API routes) |
-| AI/ML Models  | Groq, Google's Gemini                 |
-| Deployment    | Vercel                                |
-| Data Storage  | Client-side only (browser-local)       |
+After scanning, ThreatShield generates:
+- **Threat categories** detected (e.g., Violence, Cyberbullying, Self-harm)
+- **Confidence scores** for each threat
+- **Quick summaries** explaining the risks
 
-## Getting Started
+Interactive **Recharts** power beautiful, real-time pie charts and bar graphs, so you can **see exactly** what you're dealing with — no guesswork.
 
-Want to run ThreatShield locally and pretend you're part of a secret government agency? Here's how:
+---
 
-### Prerequisites
-- Node.js (v18+)
-- Yarn or npm
+## 🔒 Privacy? Unbreakable.
 
-### Installation
+- **Local-first by design**: All inputs and results live **only inside your browser**.
+- **localStorage** powers data handling — no cloud saving, no external databases.
+- **No tracking. No hidden servers. No leaks.**
+- Your sensitive information stays **yours**, always.
+
+ThreatShield isn't just fast — it's private **by default**.
+
+---
+
+## 🛠️ Built With
+
+| Technology      | Purpose                     |
+|-----------------|------------------------------|
+| **Next.js**     | Lightning-fast frontend      |
+| **React**       | Dynamic UI experience        |
+| **Tailwind CSS**| Clean, modern design         |
+| **Recharts**    | Stunning interactive graphs  |
+| **Groq AI**     | Text and audio threat analysis |
+| **Google Gemini** | Image threat detection     |
+| **Vercel**      | Global-scale hosting         |
+
+---
+
+## ⚡ Why ThreatShield?
+
+✅ Analyze text, audio, and images — all in one place  
+✅ Real-time threat summaries and risk scores  
+✅ Visualize threats clearly and instantly  
+✅ 100% privacy — no server storage, ever  
+✅ Fast, clean, and intuitive experience
+
+---
+
+## 📅 What's Coming Next?
+
+- 🌐 Multi-language threat detection
+- 📈 Organization-wide analytics dashboards
+- 🛡️ Advanced risk prediction models
+- 🔔 Real-time monitoring alerts
+
+---
+
+## 🧑‍💻 Getting Started
+
+Clone the repo and start ThreatShield locally:
+
 ```bash
 git clone https://github.com/arnvjshi/Threat-Detection-Dashboard.git
 cd Threat-Detection-Dashboard
 npm install
-# or
-yarn install
-```
-
-### Development
-```bash
 npm run dev
-# or
-yarn dev
 ```
-Open [http://localhost:3000](http://localhost:3000) and you’re good to go.
 
-## Roadmap
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-- Text threat analysis
-- Audio-to-text and threat detection
-- Image threat analysis
-- Admin analytics dashboard
-- Support for multiple languages
+---
 
-## Contributing
+## 📜 License
 
-Pull requests are welcome.  
-Bug reports are encouraged.  
-Compliments are mandatory.
+ThreatShield is released under the **MIT License** — free to use, free to improve.
 
-If you have ideas, issues, or just strong opinions, feel free to open a discussion or submit a PR. Bonus points if you make us laugh.
+---
 
-## License
+Got ideas? Feedback? Collaborations?  
+**Let's make threat detection smarter — together.**
 
-This project is licensed under the MIT License.  
-Yes, that means you can use it. Just don’t sell it back to us.
+---
 
-## Contact
-
-Built with an unhealthy amount of caffeine and ambition by the ThreatShield Team.  
-Developers: [Arnav Joshi](https://github.com/arnvjshi) , [Nehanshu Gaidhani](https://github.com/arnvjshi), [Paras Baidwaik](https://github.com/arnvjshi), [Ayush Dhamecha](https://github.com/arnvjshi)
-
-Website: [ThreatShield Dashboard](https://threat-detection-dashboard.vercel.app)
