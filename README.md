@@ -57,21 +57,17 @@ Our goal was to build a system that is:
 We believe ThreatShield represents the next generation of proactive threat monitoring — fast, secure, visual, and adaptable for education, law enforcement, enterprises, and online communities.
 
 
-**Key challenges:**
+## 🚀 Key Challenges
 
-  -Processing different data types (text/audio/image) together.
+- 🧩 **Processing different data types** (text/audio/image) together.
+- ⚡ **Achieving fast inference** without cloud servers.
+- 🖥️ **Building a visually intuitive, responsive dashboard**.
 
-  -Achieving fast inference without cloud servers.
+## 🏆 Breakthroughs
 
-  -Building a visually intuitive, responsive dashboard.
-
-**Breakthroughs:**
-
-  -Unified analysis pipeline for text and audio.
-
-  -Timestamped threat plotting with severity graph.
-
-  -Secure local storage using localStorage, avoiding backend databases.
+- 🔄 **Unified analysis pipeline** for text and audio.
+- 🕒📈 **Timestamped threat plotting** with severity graph.
+- 🔒**Secure local storage** using `localStorage`, avoiding backend databases.
 
 ---
 
