@@ -58,11 +58,11 @@ Applications include:
 
 **Backend (Minimal):**
 - Node.js
-- Express.js
+
 
 **APIs and Libraries:**
 - Groq API for high-speed inference
-- Speech-to-Text API for audio transcription
+
 
 **Hosting:**
 - Vercel
