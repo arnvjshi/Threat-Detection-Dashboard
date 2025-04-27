@@ -1,4 +1,4 @@
-# <p align="left"> <img src="https://your-image-link.com/logo.png" alt="ThreatShield Logo" width="180" /> </p>ThreatShield
+# <p align="left"> <img src="https://github.com/arnvjshi/Threat-Detection-Dashboard/blob/main/public/favicon.png?raw=true" alt="ThreatShield Logo" width="180" /> ThreatShield </p>
 
 **Live Demo**: [threat-detection-dashboard.vercel.app](https://threat-detection-dashboard.vercel.app)
 
