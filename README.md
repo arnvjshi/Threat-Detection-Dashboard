@@ -1,166 +1,162 @@
+
+![image](https://github.com/user-attachments/assets/c1215e15-b9b1-41c7-bf0c-4e65e4b2ce5a)
 # <img src="https://github.com/arnvjshi/Threat-Detection-Dashboard/blob/main/public/favicon.png?raw=true" alt="ThreatShield Logo" width="40" style="vertical-align: middle;" />ThreatShield
+**Website link**: https://threat-detection-dashboard.vercel.app/
 
-
-
-**Live Demo**: [threat-detection-dashboard.vercel.app](https://threat-detection-dashboard.vercel.app)
-
-> "Analyze. Detect. Protect. — in real time."
-
-**ThreatShield** is your AI-powered partner for real-time threat detection across **text**, **audio**, and **images** — all with **zero compromises** on privacy.  
-Analyze sensitive content in seconds, visualize threats clearly, and stay a step ahead — without your data ever leaving your device.
+Analyze. Detect. Protect. — in real time.  
+A multimodal AI threat detection platform for text, audio, and image inputs — delivering live insights, without compromising your privacy.
 
 ---
 
-## 🚀 What You Can Do with ThreatShield
+## 📌 Problem Statement
 
-### 🔍 Scan Text
-- Paste any text — from emails to reports — and instantly uncover threats like violence, hate speech, or harassment.
-- Get an easy-to-read summary and a breakdown of threat types.
-
-### 🎙️ Analyze Audio
-- Upload recordings — calls, voice notes, podcasts.
-- ThreatShield transcribes and analyzes them automatically, showing you hidden risks inside spoken content.
-
-### 🖼️ Inspect Images
-- Upload images — screenshots, media files, or graphics.
-- Our AI scans for dangerous visual elements and warns you about potential threats.
+**Problem Statement 1 – Weave AI magic with Groq**  
+Multimodal threat detection system that streams audio, text, and images and uses Groq to analyze threats.
 
 ---
 
-## Uniqueness of Idea
+## 🎯 Objective
 
-- Combines **multimodal threat detection** across text, audio, and images into a single user-friendly platform.
-- Audio files are converted to text and analyzed via Gorq AI for **threat probability**, **sentiment analysis**, **threat summary**, and **keyword detection**.
-- Text and audio share the same analysis pipeline, ensuring high consistency and efficiency.
-- Image uploads/captures are analyzed through Groq AI to generate **threat detection** and **recommendations**.
-- **Threat levels** for text, audio, and image are visualized separately using **line graphs**, providing clear tracking of trends.
-- **Previous threat data** powers insights like:
-  - Threat frequency spikes,
-  - Type of most frequent threats,
-  - Severity patterns,
-  - Source-wise threat contribution,
-  - Top recurring threatening keywords.
-- These insights help users **predict and prevent future threats proactively**, making the platform highly adaptive.
+Modern threats can originate from text messages, speech, or visual content.  
+**ThreatShield** empowers users to detect hidden dangers across all three modalities using **Groq-powered real-time AI** — delivering actionable threat summaries, severity scores, and trend graphs, all securely inside the browser.
+
+Applications include:
+- Schools & universities (bullying/fighting alerts)
+- Online platforms & social media (toxic speech, harassment)
+- Defense and law enforcement (weapon detection, intrusion detection)
+- Any organization needing real-time threat monitoring with local privacy.
 
 ---
 
-## Complexity
+## 🧠 Team & Approach
 
-- Manages multiple input types — **audio**, **text**, and **image** — each requiring different pre-processing and analysis pipelines.
-- Integrates real-time audio-to-text conversion, audio recording, image upload/capture, and backend ML model communication.
-- Plots **separate threat level graphs** for text, audio, and images.
-- Handles real-time sentiment trends and keyword tracking from the audio-text flow.
-- **Threat history analytics** introduces added complexity by:
-  - Analyzing frequency trends,
-  - Mapping severity shifts,
-  - Visualizing recurring keyword patterns,
-  - Tracking recommendation effectiveness.
-- Building such a **multi-layered, responsive dashboard** with live inputs, model outputs, and analytical visualizations requires high technical orchestration.
+**Team Name:** Tech Mavericks
 
----
+**Team Members:**
+- Nehanshu Gaidhani
+- Arnav Joshi
+- Ayush Dhamecha
+- Paras Badwaik
 
-## Relevance of Solution
-
-- Modern-day threats are **multimodal** — arising from speech, text communication, and visual content — all covered under this solution.
-- Enables organizations to **identify early signs of danger** like:
-  - Rising negative sentiment,
-  - Spike in threat frequency,
-  - Appearance of new dangerous keywords.
-- Helps prioritize security efforts towards the **highest-risk communication channels** (audio, text, image).
-- Previous threat trend analysis assists in:
-  - Deploying smarter security policies,
-  - Planning preventive actions,
-  - Conducting user/group-specific threat awareness programs.
-- Extremely relevant for schools, corporates, public safety departments, and digital content monitoring platforms.
+**Our Approach:**
+- Tackled the problem of multimodal threat detection using real-time inference with Groq.
+- Overcame challenges of combining text, audio, and images into a unified, fast system.
+- Designed a dashboard for quick, actionable insights without backend dependency.
+- Prioritized user privacy by ensuring all data processing and storage happens locally.
 
 ---
 
-## Business and Economic Impact
+## 🛠️ Tech Stack
 
-- Early detection based on past threat patterns can **prevent major incidents**, reducing financial and reputational damages.
-- Businesses can use insights like:
-  - Which departments are most at risk,
-  - Whether threats are increasing or decreasing over time,
-  - Whether previous recommendations helped in risk mitigation.
-- Enables organizations to:
-  - **Optimize security investments** based on real threat sources,
-  - **Lower cybersecurity insurance premiums**,
-  - **Train employees** based on real threat behavior trends.
-- Can be offered as a **SaaS product** to enterprises, security companies, and governments — unlocking new revenue streams through subscriptions and licensing.
-- Data-driven threat analysis also positions businesses as **proactive and responsible** in handling modern digital threats.
+**Frontend:**
+- Next.js
+- React.js
+- Tailwind CSS
+- TypeScript
+- Recharts
+- Chart.js
 
----
+**Backend (Minimal):**
+- Node.js
+- Express.js
 
-## 📊 Visual Diagnostics — Instantly
+**APIs and Libraries:**
+- Groq API for high-speed inference
+- Speech-to-Text API for audio transcription
 
-After scanning, ThreatShield generates:
-- **Threat categories** detected (e.g., Violence, Cyberbullying, Self-harm)
-- **Confidence scores** for each threat
-- **Quick summaries** explaining the risks
+**Hosting:**
+- Vercel
 
-Interactive **Recharts** power beautiful, real-time pie charts and bar graphs, so you can **see exactly** what you're dealing with — no guesswork.
-
----
-
-## 🔒 Privacy? Unbreakable.
-
-- **Local-first by design**: All inputs and results live **only inside your browser**.
-- **localStorage** powers data handling — no cloud saving, no external databases.
-- **No tracking. No hidden servers. No leaks.**
-- Your sensitive information stays **yours**, always.
-
-ThreatShield isn't just fast — it's private **by default**.
+## Sponsor Technologies Used:
+✅ Groq — Used for ultra-fast inference on text, audio, and images.
 
 ---
 
-## 🛠️ Built With
+## ✨ Key Features
 
-| Technology      | Purpose                     |
-|-----------------|------------------------------|
-| **Next.js**     | Lightning-fast frontend      |
-| **React**       | Dynamic UI experience        |
-| **Tailwind CSS**| Clean, modern design         |
-| **Recharts**    | Stunning interactive graphs  |
-| **Groq AI**     | Text and audio threat analysis |
-| **Google Gemini** | Image threat detection     |
-| **Vercel**      | Global-scale hosting         |
+✅ **Multimodal Threat Detection** — Analyze live or uploaded text, audio, and image feeds.  
+✅ **Real-Time Dashboard Alerts** — Display threats instantly with severity levels and timestamps.  
+✅ **Sentiment Analysis & Keyword Detection** — Get quick emotional and intent-based threat summaries.  
+✅ **Visual Threat Insights** — Threats plotted over time with severity graphs and heatmaps.  
+✅ **Secure Local Data Storage** — No external servers; everything is handled on the user's device.  
+✅ **Flexible Input Handling** — Supports both live streaming and file uploads.
 
----
+<img src="https://github.com/user-attachments/assets/0da3486f-45b8-49a7-b87b-91186813415c" width="300" />
+<img src="https://github.com/user-attachments/assets/bfd44c3b-1784-4125-835b-6347acd5e3dd" width="400" height="300" />
+<img src="https://github.com/user-attachments/assets/e70b599d-0949-40d1-8203-9d5e42093e48" width="300" />
 
-## ⚡ Why ThreatShield?
 
-✅ Analyze text, audio, and images — all in one place  
-✅ Real-time threat summaries and risk scores  
-✅ Visualize threats clearly and instantly  
-✅ 100% privacy — no server storage, ever  
-✅ Fast, clean, and intuitive experience
+
 
 ---
 
-## 📅 What's Coming Next?
+## 📽️ Demo & Deliverables
 
-- 🌐 Multi-language threat detection
-- 📈 Organization-wide analytics dashboards
-- 🛡️ Advanced risk prediction models
-- 🔔 Real-time monitoring alerts
+**Demo Video:** https://youtu.be/sv7x1Jv6m1I  
+**Pitch Deck / PPT:** https://drive.google.com/file/d/1KLlDhrKHaNKt7grIH1eNAwYDBb7xVYCj/view
+
 
 ---
 
-## 🧑‍💻 Getting Started
+## ✅ Tasks Checklist
 
-Clone the repo and start ThreatShield locally:
+✅ All members of the team completed the mandatory task - Followed at least 2 of our social channels and filled the form   
+✅ All members of the team completed Bonus Task 1 - Sharing of Badges and filled the form (2 points)   
+✅ All members of the team completed Bonus Task 2 - Signing up for Sprint.dev and filled the form (3 points)
+
+---
+
+## 🧪 How to Run the Project Locally
 
 ```bash
+# Clone the repository
 git clone https://github.com/arnvjshi/Threat-Detection-Dashboard.git
+
+# Navigate to the project directory
 cd Threat-Detection-Dashboard
+
+# Install dependencies
 npm install
+
+# Start the development server
 npm run dev
 ```
+Visit http://localhost:3000 to see the project running!
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+## 🧬 Future Scope
+
+🔥 Multilingual Threat Detection: Expand to detect threats in multiple languages like Hindi, Spanish, French.
+
+📊 Predictive Threat Modeling: Predict potential future threats based on past patterns and trends.
+
+📱 Mobile App Integration: Bring live threat detection to mobile platforms.
+
+🛡️ End-to-End Encryption: Stronger local encryption for even more secure processing.
+
+🏢 Enterprise Analytics: Admin dashboards for multi-department organizations and public safety institutions.
 
 ---
+## 📎 Resources / Credits
 
+Groq — High-speed text, audio, and image analysis.
+
+Speech-to-Text API — Audio transcription to text.
+
+Recharts, Chart.js — For beautiful data visualizations.
+
+https://console.groq.com/docs/
+
+https://www.chartjs.org/docs/
+
+---
+## 🏁 Final Words
+
+ThreatShield is built to make real-time, multimodal threat detection simple, fast, and private.
+With Groq’s unmatched speed and our secure local-first approach, we’re enabling safer digital spaces with instant, actionable intelligence.
+
+This is just the beginning.
+
+---
 ## 📜 License
 
 ThreatShield is released under the **MIT License** — free to use, free to improve.
