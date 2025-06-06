@@ -10,11 +10,12 @@ interface ThreatStats {
   audio: { count: number; trend: string }
   text: { count: number; trend: string }
   image: { count: number; trend: string }
+  video : { count: number; trend: string }
   total: { count: number; trend: string }
 }
 
 interface Alert {
-  type: "audio" | "text" | "image"
+  type: "audio" | "text" | "image" | "video"
   message: string
   time: string
   icon: any
@@ -26,6 +27,7 @@ export function ThreatsOverview() {
     audio: { count: 0, trend: "0%" },
     text: { count: 0, trend: "0%" },
     image: { count: 0, trend: "0%" },
+    video: { count: 0, trend: "0%" },
     total: { count: 0, trend: "0%" },
   })
 
@@ -55,6 +57,9 @@ export function ThreatsOverview() {
       const imageData = localStorage.getItem("imageAnalysisHistory")
       const imageHistory = imageData ? JSON.parse(imageData) : []
 
+      const videoData = localStorage.getItem("videoAnalysisHistory")
+      const videoHistory = videoData ? JSON.parse(videoData) : []
+
       // Count threats by level
       const audioThreats = audioHistory.filter(
         (item: any) => item.threatLevel !== "none" && item.threatLevel !== "low",
@@ -68,7 +73,11 @@ export function ThreatsOverview() {
         (item: any) => item.threatLevel !== "none" && item.threatLevel !== "low",
       ).length
 
-      const totalThreats = audioThreats + textThreats + imageThreats
+      const videoThreats = videoHistory.filter(
+        (item: any) => item.threatLevel !== "none" && item.threatLevel !== "low",
+      ).length
+
+      const totalThreats = audioThreats + textThreats + imageThreats + videoThreats
 
       // Calculate trends (simplified for demo)
       const calculateTrend = (count: number) => {
@@ -80,6 +89,7 @@ export function ThreatsOverview() {
         audio: { count: audioThreats, trend: calculateTrend(audioThreats) },
         text: { count: textThreats, trend: calculateTrend(textThreats) },
         image: { count: imageThreats, trend: calculateTrend(imageThreats) },
+        video: { count: videoThreats, trend: calculateTrend(videoHistory) },
         total: { count: totalThreats, trend: calculateTrend(totalThreats) },
       })
 
@@ -88,6 +98,7 @@ export function ThreatsOverview() {
         { name: "Audio", value: audioThreats, color: "#ef4444" },
         { name: "Text", value: textThreats, color: "#f59e0b" },
         { name: "Image", value: imageThreats, color: "#8b5cf6" },
+        { name: "Video", value: videoThreats, color: "#8b5cf6" },
       ])
 
       // Generate alerts from the most recent threats
@@ -184,7 +195,7 @@ export function ThreatsOverview() {
 
       // Add new alert
       const newAlert: Alert = {
-        type: type as "audio" | "text" | "image",
+        type: type as "audio" | "text" | "image" | "video",
         message,
         time: "Just now",
         icon: type === "audio" ? AlertTriangle : type === "text" ? FileText : ImageIcon,
@@ -275,6 +286,24 @@ export function ThreatsOverview() {
               <div className="flex items-center gap-1 rounded-full bg-purple-500/10 px-2 py-1 text-xs text-purple-400">
                 <TrendingUp className="h-3 w-3" />
                 <span>{stats.image.trend}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="rounded-lg bg-white/5 p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <div className="rounded-full bg-amber-500/20 p-2">
+                  <FileText className="h-5 w-5 text-amber-500" />
+                </div>
+                <div>
+                  <p className="text-sm text-slate-300">Video Threats</p>
+                  <p className="text-2xl font-bold text-white">{stats.text.count}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-1 rounded-full bg-amber-500/10 px-2 py-1 text-xs text-amber-400">
+                <TrendingUp className="h-3 w-3" />
+                <span>{stats.video.trend}</span>
               </div>
             </div>
           </div>
