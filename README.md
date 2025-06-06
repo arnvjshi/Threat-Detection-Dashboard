@@ -1,5 +1,4 @@
 
-![image](https://github.com/user-attachments/assets/c1215e15-b9b1-41c7-bf0c-4e65e4b2ce5a)
 # <img src="https://github.com/arnvjshi/Threat-Detection-Dashboard/blob/main/public/favicon.png?raw=true" alt="ThreatShield Logo" width="40" style="vertical-align: middle;" />ThreatShield
 **Website link**: https://threat-detection-dashboard.vercel.app/
 
