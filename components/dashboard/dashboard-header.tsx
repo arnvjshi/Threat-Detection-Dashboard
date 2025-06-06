@@ -30,11 +30,12 @@ export function DashboardHeader({ selectedTab, setSelectedTab }: DashboardHeader
       </div>
 
       <Tabs value={selectedTab} onValueChange={setSelectedTab} className="w-full">
-        <TabsList className="grid w-full grid-cols-4 bg-white/5 backdrop-blur-md">
+        <TabsList className="grid w-full grid-cols-5 bg-white/5 backdrop-blur-md">
           <TabsTrigger value="all">All Threats</TabsTrigger>
           <TabsTrigger value="audio">Audio</TabsTrigger>
           <TabsTrigger value="text">Text</TabsTrigger>
           <TabsTrigger value="image">Image</TabsTrigger>
+          <TabsTrigger value="video">Video</TabsTrigger>
         </TabsList>
       </Tabs>
     </div>
