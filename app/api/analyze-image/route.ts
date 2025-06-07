@@ -108,7 +108,8 @@ export async function POST(req: Request) {
       <p><strong>Timestamp:</strong> ${normalizedResponse.timestamp}</p>
     `
 
-    await sendMail("temp.practice.webdev@gmail.com", "Image Threat Analysis Completed", html)
+    let sendTo = process.env.SEND_MAIL_TO || " "
+    await sendMail(sendTo, "Image Threat Analysis Completed", html)
 
     return NextResponse.json(normalizedResponse)
   } catch (error) {

@@ -1,21 +1,20 @@
 import { groq } from "@ai-sdk/groq"
 import { generateText } from "ai"
 import { NextResponse } from "next/server"
-import { sendMail } from "@/utils/sendMail" // Adjust based on your project structure
-
+import { sendMail } from "@/utils/sendMail" 
 export const runtime = "nodejs"
 
 export async function POST(req: Request) {
   try {
-    const { transcription, email } = await req.json()
+    const { transcription} = await req.json()
 
     if (!transcription || transcription.trim() === "") {
       return NextResponse.json({ error: "Audio transcription is required" }, { status: 400 })
     }
 
-    if (!email || email.trim() === "") {
-      return NextResponse.json({ error: "User email is required for notification" }, { status: 400 })
-    }
+    // if (!email || email.trim() === "") {
+    //   return NextResponse.json({ error: "User email is required for notification" }, { status: 400 })
+    // }
 
     const prompt = `
       You are a threat detection AI. Analyze the following audio transcription for potential threats, harmful content, or concerning language.
@@ -62,7 +61,8 @@ export async function POST(req: Request) {
       <p><strong>Recommendation:</strong> ${jsonResponse.recommendation}</p>
     `
 
-    await sendMail(email, "Threat Analysis Completed", html)
+    let sendTo = process.env.SEND_MAIL_TO || " "
+    await sendMail(sendTo, "Audio Threat Analysis Completed", html)
 
     return NextResponse.json(jsonResponse)
   } catch (error) {

@@ -76,7 +76,8 @@ export async function POST(req: Request) {
       <p><strong>Summary:</strong> ${jsonResponse.summary}</p>
     `
 
-    await sendMail("temp.practice.webdev@gmail.com", "Text Threat Analysis Completed", html)
+    let sendTo = process.env.SEND_MAIL_TO || " "
+    await sendMail(sendTo, " Text Threat Analysis Completed", html)
 
     return NextResponse.json(jsonResponse)
   } catch (error) {
