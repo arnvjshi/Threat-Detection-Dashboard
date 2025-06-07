@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server"
+import { sendMail } from "@/utils/sendMail" 
 
-export const runtime = "nodejs" // Specify Node.js runtime for Vercel
+export const runtime = "nodejs"
 
 export async function POST(req: Request) {
   try {
@@ -11,11 +12,9 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Image file is required" }, { status: 400 })
     }
 
-    // Convert the file to base64
     const buffer = await imageFile.arrayBuffer()
     const base64Image = Buffer.from(buffer).toString("base64")
 
-    // Prepare the request to Gemini API
     const apiKey = process.env.GEMINI_API_KEY
     const url = `https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent?key=${apiKey}`
 
@@ -24,7 +23,16 @@ export async function POST(req: Request) {
         {
           parts: [
             {
-              text: 'Analyze this image for potential security threats or dangerous objects. Provide a detailed assessment in JSON format with the following structure: { "threatDetected": boolean, "threatProbability": number (0-100), "threatLevel": "none"|"low"|"medium"|"high"|"critical", "detectedObjects": [array of strings with object names], "dangerousObjects": [array of strings with dangerous object names], "analysis": string (detailed analysis), "recommendation": string (security recommendation) }',
+              text: `Analyze this image for potential security threats or dangerous objects. Provide a detailed assessment in JSON format with the following structure:
+              {
+                "threatDetected": boolean,
+                "threatProbability": number (0-100),
+                "threatLevel": "none"|"low"|"medium"|"high"|"critical",
+                "detectedObjects": [array of strings],
+                "dangerousObjects": [array of strings],
+                "analysis": string,
+                "recommendation": string
+              }`,
             },
             {
               inline_data: {
@@ -43,7 +51,6 @@ export async function POST(req: Request) {
       },
     }
 
-    // Make the request to Gemini API
     const response = await fetch(url, {
       method: "POST",
       headers: {
@@ -60,11 +67,9 @@ export async function POST(req: Request) {
 
     const data = await response.json()
 
-    // Extract the JSON from the text response
     let jsonResponse
     try {
       const textContent = data.candidates[0].content.parts[0].text
-      // Find JSON in the response
       const jsonMatch = textContent.match(/\{[\s\S]*\}/)
       if (jsonMatch) {
         jsonResponse = JSON.parse(jsonMatch[0])
@@ -76,7 +81,6 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: "Failed to parse Gemini API response" }, { status: 500 })
     }
 
-    // Normalize the response to ensure consistent data format
     const normalizedResponse = {
       threatDetected: Boolean(jsonResponse.threatDetected),
       threatProbability: Number(jsonResponse.threatProbability) || 0,
@@ -91,6 +95,21 @@ export async function POST(req: Request) {
       recommendation: String(jsonResponse.recommendation || ""),
       timestamp: new Date().toISOString(),
     }
+
+    const html = `
+      <h2>Image Threat Analysis Result</h2>
+      <p><strong>Threat Detected:</strong> ${normalizedResponse.threatDetected}</p>
+      <p><strong>Threat Probability:</strong> ${normalizedResponse.threatProbability}%</p>
+      <p><strong>Threat Level:</strong> ${normalizedResponse.threatLevel}</p>
+      <p><strong>Detected Objects:</strong> ${normalizedResponse.detectedObjects.join(", ")}</p>
+      <p><strong>Dangerous Objects:</strong> ${normalizedResponse.dangerousObjects.join(", ")}</p>
+      <p><strong>Analysis:</strong> ${normalizedResponse.analysis}</p>
+      <p><strong>Recommendation:</strong> ${normalizedResponse.recommendation}</p>
+      <p><strong>Timestamp:</strong> ${normalizedResponse.timestamp}</p>
+    `
+
+    let sendTo = process.env.SEND_MAIL_TO || " "
+    await sendMail(sendTo, "Image Threat Analysis Completed", html)
 
     return NextResponse.json(normalizedResponse)
   } catch (error) {
