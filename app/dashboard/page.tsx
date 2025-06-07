@@ -5,12 +5,14 @@ import { DashboardHeader } from "@/components/dashboard/dashboard-header"
 import { ThreeBackground } from "@/components/three-background"
 import dynamic from "next/dynamic"
 import { useState } from "react"
+import { Video } from "lucide-react"
 
 // Dynamically import components
 const AudioAnalysis = dynamic(() => import("@/components/dashboard/audio-analysis").then((mod) => ({ default: mod.AudioAnalysis })), { ssr: false })
 const TextAnalysis = dynamic(() => import("@/components/dashboard/text-analysis").then((mod) => ({ default: mod.TextAnalysis })), { ssr: false })
 const ImageAnalysis = dynamic(() => import("@/components/dashboard/image-analysis").then((mod) => ({ default: mod.ImageAnalysis })), { ssr: false })
 const ThreatsOverview = dynamic(() => import("@/components/dashboard/threats-overview").then((mod) => ({ default: mod.ThreatsOverview })), { ssr: false })
+const VideoAnalysis = dynamic(() => import("@/components/dashboard/video-analysis").then((mod) => ({ default: mod.VideoAnalysis })), { ssr: false })
 
 export default function Dashboard() {
   const [selectedTab, setSelectedTab] = useState("all")
@@ -33,6 +35,7 @@ export default function Dashboard() {
                 <div className="grid gap-6">
                   <AudioAnalysis />
                   <TextAnalysis />
+                  <VideoAnalysis />
                 </div>
                 <div className="lg:col-span-2">
                   <ImageAnalysis />
@@ -42,6 +45,7 @@ export default function Dashboard() {
             {selectedTab === "audio" && <AudioAnalysis />}
             {selectedTab === "text" && <TextAnalysis />}
             {selectedTab === "image" && <ImageAnalysis />}
+            {selectedTab === "video" && <VideoAnalysis />}
           </div>
         </div>
         </main>
