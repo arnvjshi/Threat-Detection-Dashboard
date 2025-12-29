@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState, useRef, useEffect } from "react"
+import { useState, useRef, useEffect, useMemo } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Progress } from "@/components/ui/progress"
@@ -319,12 +319,16 @@ recognition.onresult = (event: any) => {
     }
   }
 
-  // Prepare chart data
-  const chartData = historicalData.slice(-10).map((item) => ({
-    timestamp: new Date(item.timestamp).toLocaleTimeString(),
-    probability: item.threatProbability,
-    level: item.threatLevel,
-  }))
+  // Prepare chart data - memoized to prevent recalculation on every render
+  const chartData = useMemo(
+    () =>
+      historicalData.slice(-10).map((item) => ({
+        timestamp: new Date(item.timestamp).toLocaleTimeString(),
+        probability: item.threatProbability,
+        level: item.threatLevel,
+      })),
+    [historicalData]
+  )
 
   useEffect(() => {
     if (!isClient) return

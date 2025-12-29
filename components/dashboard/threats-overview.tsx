@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { AlertTriangle, FileText, ImageIcon, ShieldAlert, TrendingUp } from "lucide-react"
@@ -40,8 +40,8 @@ export function ThreatsOverview() {
     setIsClient(true)
   }, [])
 
-  // Function to load data from localStorage
-  const loadDataFromLocalStorage = () => {
+  // Function to load data from localStorage - memoized with useCallback
+  const loadDataFromLocalStorage = useCallback(() => {
     if (typeof window === "undefined") return
 
     try {
@@ -173,18 +173,18 @@ export function ThreatsOverview() {
     } catch (error) {
       console.error("Error loading data from localStorage:", error)
     }
-  }
+  }, []) // Empty deps since it only reads from localStorage
 
   // Load data on component mount (client-side only)
   useEffect(() => {
     if (isClient) {
       loadDataFromLocalStorage()
 
-      // Set up interval to refresh data
-      const interval = setInterval(loadDataFromLocalStorage, 5000)
+      // Set up interval to refresh data - increased from 5s to 10s for better performance
+      const interval = setInterval(loadDataFromLocalStorage, 10000)
       return () => clearInterval(interval)
     }
-  }, [isClient])
+  }, [isClient, loadDataFromLocalStorage])
 
   // Listen for custom events from the analysis components
   useEffect(() => {
@@ -298,7 +298,7 @@ export function ThreatsOverview() {
                 </div>
                 <div>
                   <p className="text-sm text-slate-300">Video Threats</p>
-                  <p className="text-2xl font-bold text-white">{stats.text.count}</p>
+                  <p className="text-2xl font-bold text-white">{stats.video.count}</p>
                 </div>
               </div>
               <div className="flex items-center gap-1 rounded-full bg-amber-500/10 px-2 py-1 text-xs text-amber-400">

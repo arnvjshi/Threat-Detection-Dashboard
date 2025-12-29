@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useMemo } from "react"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
@@ -149,12 +149,16 @@ export function TextAnalysis() {
     }
   }
 
-  // Prepare chart data
-  const chartData = historicalData.slice(-10).map((item) => ({
-    timestamp: new Date(item.timestamp).toLocaleTimeString(),
-    probability: item.threatProbability,
-    level: item.threatLevel,
-  }))
+  // Prepare chart data - memoized to prevent recalculation on every render
+  const chartData = useMemo(
+    () =>
+      historicalData.slice(-10).map((item) => ({
+        timestamp: new Date(item.timestamp).toLocaleTimeString(),
+        probability: item.threatProbability,
+        level: item.threatLevel,
+      })),
+    [historicalData]
+  )
 
   return (
     <Card className="overflow-hidden border-0 bg-white/5 backdrop-blur-lg">

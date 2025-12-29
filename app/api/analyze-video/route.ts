@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server"
+import { parseJsonResponse } from "@/utils/parseJsonResponse"
 
 export const runtime = "nodejs" // Specify Node.js runtime for Vercel
 
@@ -64,13 +65,7 @@ export async function POST(req: Request) {
     let jsonResponse
     try {
       const textContent = data.candidates[0].content.parts[0].text
-      // Find JSON in the response
-      const jsonMatch = textContent.match(/\{[\s\S]*\}/)
-      if (jsonMatch) {
-        jsonResponse = JSON.parse(jsonMatch[0])
-      } else {
-        throw new Error("No JSON found in response")
-      }
+      jsonResponse = parseJsonResponse(textContent)
     } catch (error) {
       console.error("Error parsing Gemini response:", error)
       return NextResponse.json({ error: "Failed to parse Gemini API response" }, { status: 500 })

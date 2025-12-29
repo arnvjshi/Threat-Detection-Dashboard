@@ -2,6 +2,7 @@ import { groq } from "@ai-sdk/groq"
 import { generateText } from "ai"
 import { NextResponse } from "next/server"
 import { sendMail } from "@/utils/sendMail"
+import { parseJsonResponse } from "@/utils/parseJsonResponse"
 
 export const runtime = "nodejs"
 
@@ -47,19 +48,7 @@ export async function POST(req: Request) {
       prompt,
     })
 
-    let jsonResponse
-
-    try {
-      jsonResponse = JSON.parse(responseText)
-    } catch (error) {
-      const jsonMatch = responseText.match(/\{[\s\S]*\}/)
-      if (jsonMatch) {
-        jsonResponse = JSON.parse(jsonMatch[0])
-      } else {
-        throw new Error("Failed to parse JSON response")
-      }
-    }
-
+    const jsonResponse = parseJsonResponse(responseText)
 
     const html = `
       <h2>Text Threat Analysis Result</h2>
@@ -77,7 +66,10 @@ export async function POST(req: Request) {
     `
 
     let sendTo = process.env.SEND_MAIL_TO || " "
-    await sendMail(sendTo, " Text Threat Analysis Completed", html)
+    // Send email in background without blocking the response
+    sendMail(sendTo, " Text Threat Analysis Completed", html).catch(err => 
+      console.error("Error sending email:", err)
+    )
 
     return NextResponse.json(jsonResponse)
   } catch (error) {

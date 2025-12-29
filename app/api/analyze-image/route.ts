@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server"
-import { sendMail } from "@/utils/sendMail" 
+import { sendMail } from "@/utils/sendMail"
+import { parseJsonResponse } from "@/utils/parseJsonResponse"
 
 export const runtime = "nodejs"
 
@@ -67,15 +68,11 @@ export async function POST(req: Request) {
 
     const data = await response.json()
 
+    // Extract the JSON from the text response
     let jsonResponse
     try {
       const textContent = data.candidates[0].content.parts[0].text
-      const jsonMatch = textContent.match(/\{[\s\S]*\}/)
-      if (jsonMatch) {
-        jsonResponse = JSON.parse(jsonMatch[0])
-      } else {
-        throw new Error("No JSON found in response")
-      }
+      jsonResponse = parseJsonResponse(textContent)
     } catch (error) {
       console.error("Error parsing Gemini response:", error)
       return NextResponse.json({ error: "Failed to parse Gemini API response" }, { status: 500 })
@@ -109,7 +106,10 @@ export async function POST(req: Request) {
     `
 
     let sendTo = process.env.SEND_MAIL_TO || " "
-    await sendMail(sendTo, "Image Threat Analysis Completed", html)
+    // Send email in background without blocking the response
+    sendMail(sendTo, "Image Threat Analysis Completed", html).catch(err =>
+      console.error("Error sending email:", err)
+    )
 
     return NextResponse.json(normalizedResponse)
   } catch (error) {
