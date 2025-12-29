@@ -1,8 +1,9 @@
 /**
  * Utility function to parse JSON from AI response text
  * Handles cases where JSON might be wrapped in markdown or other text
+ * @returns The parsed JSON object, or throws an error if parsing fails
  */
-export function parseJsonResponse(responseText: string): any {
+export function parseJsonResponse(responseText: string): unknown {
   try {
     // Try direct parse first
     return JSON.parse(responseText)

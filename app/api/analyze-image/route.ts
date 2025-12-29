@@ -72,7 +72,15 @@ export async function POST(req: Request) {
     let jsonResponse
     try {
       const textContent = data.candidates[0].content.parts[0].text
-      jsonResponse = parseJsonResponse(textContent)
+      jsonResponse = parseJsonResponse(textContent) as {
+        threatDetected: boolean
+        threatProbability: number
+        threatLevel: string
+        detectedObjects: string[]
+        dangerousObjects: string[]
+        analysis: string
+        recommendation: string
+      }
     } catch (error) {
       console.error("Error parsing Gemini response:", error)
       return NextResponse.json({ error: "Failed to parse Gemini API response" }, { status: 500 })

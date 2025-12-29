@@ -48,7 +48,14 @@ export async function POST(req: Request) {
       prompt,
     })
 
-    const jsonResponse = parseJsonResponse(responseText)
+    const jsonResponse = parseJsonResponse(responseText) as {
+      threatProbability: number
+      threatLevel: string
+      sentiment: { negative: number; neutral: number; positive: number }
+      flaggedContent: string
+      keywords: string[]
+      summary: string
+    }
 
     const html = `
       <h2>Text Threat Analysis Result</h2>

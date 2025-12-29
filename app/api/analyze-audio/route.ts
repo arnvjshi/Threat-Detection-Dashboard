@@ -40,7 +40,13 @@ export async function POST(req: Request) {
       prompt,
     })
 
-    const jsonResponse = parseJsonResponse(responseText)
+    const jsonResponse = parseJsonResponse(responseText) as {
+      threatProbability: number
+      threatLevel: string
+      detectedKeywords: string[]
+      analysis: string
+      recommendation: string
+    }
 
     // Email body
     const html = `
