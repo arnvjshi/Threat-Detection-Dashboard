@@ -45,37 +45,28 @@ export function ThreatsOverview() {
     if (typeof window === "undefined") return
 
     try {
-      // Load audio analysis history
+      // Load all history data
       const audioData = localStorage.getItem("audioAnalysisHistory")
       const audioHistory = audioData ? JSON.parse(audioData) : []
 
-      // Load text analysis history
       const textData = localStorage.getItem("textAnalysisHistory")
       const textHistory = textData ? JSON.parse(textData) : []
 
-      // Load image analysis history
       const imageData = localStorage.getItem("imageAnalysisHistory")
       const imageHistory = imageData ? JSON.parse(imageData) : []
 
       const videoData = localStorage.getItem("videoAnalysisHistory")
       const videoHistory = videoData ? JSON.parse(videoData) : []
 
-      // Count threats by level
-      const audioThreats = audioHistory.filter(
-        (item: any) => item.threatLevel !== "none" && item.threatLevel !== "low",
-      ).length
+      // Helper to check if threat level is significant
+      const isSignificantThreat = (item: any) => 
+        item.threatLevel !== "none" && item.threatLevel !== "low"
 
-      const textThreats = textHistory.filter(
-        (item: any) => item.threatLevel !== "none" && item.threatLevel !== "low",
-      ).length
-
-      const imageThreats = imageHistory.filter(
-        (item: any) => item.threatLevel !== "none" && item.threatLevel !== "low",
-      ).length
-
-      const videoThreats = videoHistory.filter(
-        (item: any) => item.threatLevel !== "none" && item.threatLevel !== "low",
-      ).length
+      // Count threats by level in a single pass
+      const audioThreats = audioHistory.filter(isSignificantThreat).length
+      const textThreats = textHistory.filter(isSignificantThreat).length
+      const imageThreats = imageHistory.filter(isSignificantThreat).length
+      const videoThreats = videoHistory.filter(isSignificantThreat).length
 
       const totalThreats = audioThreats + textThreats + imageThreats + videoThreats
 
@@ -89,7 +80,7 @@ export function ThreatsOverview() {
         audio: { count: audioThreats, trend: calculateTrend(audioThreats) },
         text: { count: textThreats, trend: calculateTrend(textThreats) },
         image: { count: imageThreats, trend: calculateTrend(imageThreats) },
-        video: { count: videoThreats, trend: calculateTrend(videoHistory) },
+        video: { count: videoThreats, trend: calculateTrend(videoThreats) },
         total: { count: totalThreats, trend: calculateTrend(totalThreats) },
       })
 
@@ -101,21 +92,24 @@ export function ThreatsOverview() {
         { name: "Video", value: videoThreats, color: "#8b5cf6" },
       ])
 
-      // Generate alerts from the most recent threats
+      // Generate alerts from the most recent threats - optimized to reduce passes
       const newAlerts: Alert[] = []
+
+      // Helper function to format keywords/objects (reused logic)
+      const formatItems = (items: any[], count: number = 2): string => {
+        if (!Array.isArray(items)) return ""
+        return items
+          .map((item: any) => (typeof item === "string" ? item : item.keyword || item.object || String(item)))
+          .slice(0, count)
+          .join(", ")
+      }
 
       // Add audio alerts
       audioHistory
-        .filter((item: any) => item.threatLevel !== "none" && item.threatLevel !== "low")
+        .filter(isSignificantThreat)
         .slice(-2)
         .forEach((item: any) => {
-          const keywords = Array.isArray(item.detectedKeywords)
-            ? item.detectedKeywords
-                .map((kw: any) => (typeof kw === "string" ? kw : kw.keyword || String(kw)))
-                .slice(0, 2)
-                .join(", ")
-            : "unknown threat"
-
+          const keywords = formatItems(item.detectedKeywords) || "unknown threat"
           newAlerts.push({
             type: "audio",
             message: `Suspicious audio detected: ${keywords}`,
@@ -127,16 +121,10 @@ export function ThreatsOverview() {
 
       // Add text alerts
       textHistory
-        .filter((item: any) => item.threatLevel !== "none" && item.threatLevel !== "low")
+        .filter(isSignificantThreat)
         .slice(-2)
         .forEach((item: any) => {
-          const keywords = Array.isArray(item.keywords)
-            ? item.keywords
-                .map((kw: any) => (typeof kw === "string" ? kw : kw.keyword || String(kw)))
-                .slice(0, 2)
-                .join(", ")
-            : "concerning content"
-
+          const keywords = formatItems(item.keywords) || "concerning content"
           newAlerts.push({
             type: "text",
             message: `Threatening text identified: ${keywords}`,
@@ -148,16 +136,10 @@ export function ThreatsOverview() {
 
       // Add image alerts
       imageHistory
-        .filter((item: any) => item.threatLevel !== "none" && item.threatLevel !== "low")
+        .filter(isSignificantThreat)
         .slice(-2)
         .forEach((item: any) => {
-          const dangerousObjects = Array.isArray(item.dangerousObjects)
-            ? item.dangerousObjects
-                .map((obj: any) => (typeof obj === "string" ? obj : obj.object || String(obj)))
-                .slice(0, 2)
-                .join(", ")
-            : "suspicious item"
-
+          const dangerousObjects = formatItems(item.dangerousObjects) || "suspicious item"
           newAlerts.push({
             type: "image",
             message: `Dangerous object detected: ${dangerousObjects}`,

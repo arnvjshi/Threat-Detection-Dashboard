@@ -10,6 +10,7 @@ import { Mic, Upload, Play, Pause, Loader2, StopCircle } from "lucide-react"
 import { useToast } from "@/components/ui/use-toast"
 import { Line, LineChart, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart"
+import { getThreatLevelColor, getThreatLevelProgressColor } from "@/utils/threatLevelStyles"
 
 interface AudioAnalysisResult {
   threatProbability: number
@@ -282,40 +283,6 @@ recognition.onresult = (event: any) => {
         title: "Audio file uploaded",
         description: "Please manually transcribe the audio content in the text area below for analysis.",
       })
-    }
-  }
-
-  const getThreatLevelColor = (level: string) => {
-    switch (level?.toLowerCase()) {
-      case "none":
-        return "text-green-400"
-      case "low":
-        return "text-blue-400"
-      case "medium":
-        return "text-amber-400"
-      case "high":
-        return "text-orange-400"
-      case "critical":
-        return "text-red-400"
-      default:
-        return "text-slate-400"
-    }
-  }
-
-  const getThreatLevelProgressColor = (level: string) => {
-    switch (level?.toLowerCase()) {
-      case "none":
-        return "bg-green-500"
-      case "low":
-        return "bg-blue-500"
-      case "medium":
-        return "bg-amber-500"
-      case "high":
-        return "bg-orange-500"
-      case "critical":
-        return "bg-red-500"
-      default:
-        return "bg-slate-500"
     }
   }
 
