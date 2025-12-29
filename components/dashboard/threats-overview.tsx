@@ -70,26 +70,24 @@ export function ThreatsOverview() {
 
       const totalThreats = audioThreats + textThreats + imageThreats + videoThreats
 
-      // Calculate trends (simplified for demo)
-      const calculateTrend = (count: number) => {
-        const random = Math.random() * 20 - 10 // Random between -10% and +10%
-        return `${random > 0 ? "+" : ""}${random.toFixed(1)}%`
-      }
+      // Note: Trend calculation would require historical comparison data
+      // For now, we show the current count only
+      const noTrend = "—"
 
       setStats({
-        audio: { count: audioThreats, trend: calculateTrend(audioThreats) },
-        text: { count: textThreats, trend: calculateTrend(textThreats) },
-        image: { count: imageThreats, trend: calculateTrend(imageThreats) },
-        video: { count: videoThreats, trend: calculateTrend(videoThreats) },
-        total: { count: totalThreats, trend: calculateTrend(totalThreats) },
+        audio: { count: audioThreats, trend: noTrend },
+        text: { count: textThreats, trend: noTrend },
+        image: { count: imageThreats, trend: noTrend },
+        video: { count: videoThreats, trend: noTrend },
+        total: { count: totalThreats, trend: noTrend },
       })
 
-      // Create threat distribution data for pie chart
+      // Create threat distribution data for pie chart - using distinct colors
       setThreatDistribution([
-        { name: "Audio", value: audioThreats, color: "#ef4444" },
-        { name: "Text", value: textThreats, color: "#f59e0b" },
-        { name: "Image", value: imageThreats, color: "#8b5cf6" },
-        { name: "Video", value: videoThreats, color: "#8b5cf6" },
+        { name: "Audio", value: audioThreats, color: "#ef4444" },     // Red
+        { name: "Text", value: textThreats, color: "#f59e0b" },       // Amber
+        { name: "Image", value: imageThreats, color: "#8b5cf6" },     // Purple
+        { name: "Video", value: videoThreats, color: "#3b82f6" },     // Blue
       ])
 
       // Generate alerts from the most recent threats - optimized to reduce passes
